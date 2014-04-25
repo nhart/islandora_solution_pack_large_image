@@ -32,6 +32,20 @@ function islandora_large_image_requirements($phase) {
         'description' => $t('Ensure that adore-djatoka is installed and that kdu_compress is accessible by PHP.'),
       );
     }
+
+    $command = 'command -v ufraw >/dev/null 2>&1';
+    exec($command, $out, $ret);
+
+    if ($ret != 0) {
+      $requirements['ufraw'] = array(
+        'title' => $t("UFRaw"),
+        'value' => $t("Not installed"),
+        'severity' => REQUIREMENT_ERROR,
+        'description' => $t('Ensure that ufraw is installed.'),
+      );
+    }
+
+
   }
   return $requirements;
 }

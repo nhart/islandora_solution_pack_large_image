@@ -10,12 +10,14 @@ Large Image Solution Pack
 =========================
 
 The large image solution pack loads all required Fedora objects, and creates an empty collection object
-to accept tiff's and create derivatives.
+to accept tiff's and dng's and create derivatives.
 
 The large image solution pack is dependent on the imagemagick module. Make sure
 you have imagemagick enabled as the default image processor
 
 To successfully create derivative data streams ImageMagick (TN & JPG) and Kakadu (JP2) need to be installed on the server.
+
+To successfully create derivative data streams from DNG files, UFRaw needs to be installed on the server.
 
 To use ImageMagick you must also configure the image-tool kit on drupal use ImageMagick rather than GD otherwise (TN & JPG) data streams will not be generated.
 Goto "admin/config/media/image-toolkit" and select "ImageMagick"
