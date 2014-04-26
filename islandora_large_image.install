@@ -69,3 +69,14 @@ function islandora_large_image_uninstall() {
   $variables = array('islandora_large_image_viewers');
   array_walk($variables, 'variable_del');
 }
+
+/**
+ * Implements hook_update_N().
+ *
+ * Alert user to install UFRaw
+ */
+
+function islandora_update_7001(&$sandbox) {
+  $t = get_t();
+  drupal_set_message($t('The Large Image solution pack now supports raw files (dng). You must install UFRaw to support dng files'));
+}
