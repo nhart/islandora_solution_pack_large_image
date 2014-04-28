@@ -44,8 +44,6 @@ function islandora_large_image_requirements($phase) {
         'description' => $t('Ensure that ufraw is installed.'),
       );
     }
-
-
   }
   return $requirements;
 }
