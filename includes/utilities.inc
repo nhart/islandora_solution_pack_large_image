@@ -32,3 +32,15 @@ function islandora_large_image_check_imagemagick_for_jpeg2000() {
 
   return $supports;
 }
+
+/**
+ * Determine if UFRaw is installed for DNG file support
+ *
+ * @return bool
+ *  TRUE if UFRaw is installed
+ */
+function islandora_large_image_check_ufraw_for_dng() {
+  $e = exec(escapeshellcmd(variable_get('islandora_ufraw_url', '/usr/bin/ufraw')), $command_output, $return);
+  $supports = ($return == 1 ? TRUE : FALSE);
+  return $supports;
+}

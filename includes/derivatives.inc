@@ -49,7 +49,7 @@ function islandora_large_image_create_jp2_derivative(AbstractObject $object, $fo
     module_load_include('inc', 'islandora_large_image', 'includes/utilities');
     $kakadu = variable_get('islandora_use_kakadu', !islandora_large_image_check_imagemagick_for_jpeg2000());
     $mime = strtolower($object['OBJ']->mimetype);
-    if ($mime == 'image/jpeg' || $mime == 'image/jpg' || $mime == 'image/x-adobe-dng') {
+    if ($mime == 'image/jpeg' || $mime == 'image/jpg') { //|| $mime == 'image/x-adobe-dng'
       $kakadu = FALSE;
     }
     $lossless = variable_get('islandora_lossless', FALSE);
@@ -69,11 +69,14 @@ function islandora_large_image_create_jp2_derivative(AbstractObject $object, $fo
     }
 
     if ($kakadu) {
+      dsm('try kak');
       // Create JP2.
       if (!$lossless) {
+        dsm('vvvv');
         $derivative_file = islandora_large_image_kdu_compress($uploaded_file, "temporary://{$base_name}_JP2.jp2");
       }
       else {
+        dsm('iiiiii');
         $derivative_file = islandora_large_image_kdu_compress(
           $uploaded_file,
           "temporary://{$base_name}_JP2.jp2",
@@ -91,11 +94,15 @@ function islandora_large_image_create_jp2_derivative(AbstractObject $object, $fo
       }
     }
     if (!$kakadu) {
+      dsm('image magic....');
       $derivative_file = islandora_large_image_imagemagick_convert(
         $uploaded_file,
         "temporary://{$base_name}_JP2.jp2",
         islandora_large_image_get_args($lossless)
       );
+    }
+    else {
+      dsm('kkkk returned trur');
     }
     if ($derivative_file === FALSE) {
       $to_return['messages'][] = array(

@@ -24,6 +24,7 @@ function islandora_large_image_admin(array $form, array &$form_state) {
   };
   $imagemagick_supports_jp2000 = islandora_large_image_check_imagemagick_for_jpeg2000();
   $kakadu = $get_default_value('islandora_kakadu_url', '/usr/bin/kdu_compress');
+  $ufraw = $get_default_value('islandora_ufraw_url', '/usr/bin/ufraw');
   $form = array(
     'islandora_lossless' => array(
       '#type' => 'checkbox',
@@ -75,6 +76,26 @@ function islandora_large_image_admin(array $form, array &$form_state) {
         ),
       ),
     ),
+    'islandora_ufraw_url' => array(
+      '#type' => 'textfield',
+      '#title' => t("Path to UFRaw"),
+      '#default_value' => $ufraw,
+      '#description' => t('Path to the UFRaw executable for DNG support.<br/>!msg', array('!msg' => islandora_executable_available_message($ufraw))),
+      '#prefix' => '<div id="ufraw-wrapper">',
+      '#suffix' => '</div>',
+      '#ajax' => array(
+        'callback' => 'islandora_update_ufraw_url_div',
+        'wrapper' => 'ufraw-wrapper',
+        'effect' => 'fade',
+        'event' => 'blur',
+        'progress' => array('type' => 'throbber'),
+      ),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="islandora_use_ufraw"]' => array('checked' => TRUE),
+        ),
+      ),
+    ),
   );
   module_load_include('inc', 'islandora', 'includes/solution_packs');
   $form += islandora_viewers_form('islandora_large_image_viewers', 'image/jp2');
@@ -107,4 +128,11 @@ function islandora_large_image_admin_submit($form, &$form_state) {
  */
 function islandora_update_kakadu_url_div($form, $form_state) {
   return $form['islandora_kakadu_url'];
+}
+
+/**
+ * Function update_ufraw_url_div.
+ */
+function islandora_update_ufraw_url_div($form, $form_state) {
+  return $form['islandora_ufraw_url'];
 }
